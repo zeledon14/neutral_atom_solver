@@ -1,4 +1,53 @@
 module Integral_Numerical_Methods
+
+    """
+    integrate_second_order_DE(grid::Vector{Float32}, 
+        g::Vector{Float32}, f::Vector{Float32}, 
+        init_valu1::Float32, init_valu2::Float32)::Vector{Float32}
+
+        Solves differential equations of the form
+            \frac{d^2y}{dx^2} = f(x)y + g(x) by transforming it into a system
+            of equations.
+            \frac{dy^0}{dx} = y^1(x) \\
+            \frac{dy^1}{dx} = f(x)y^0(x) + g(x)
+        to solve the system of differential equations, two methods are used Runge Kutta order 4
+        (RK4) and prediction correction Adams-Moulton oder 5 (PCAM5). The first 4 values of 
+        the solution uses the RK4 method and the rest uses the PCAM5.
+            **Inputs:**
+                -grid::Vector{Float32} values of the space grid where the functions are defined
+                -g::Vector{Float32} a vector with the values g over the grid
+                -f::Vector{Float32} a vector with the values f over the grid
+                -init_valu1::Float32 first initial value of y at grid[1]
+                -init_valu2::Float32 first initial value of y at grid[2]
+                
+            
+            **Output:**
+                -Vector{Float32} the function that solves the differential equation over the grid
+"""
+function integrate_second_order_DE(grid::Vector{Float32}, 
+        g::Vector{Float32}, f::Vector{Float32}, 
+        init_valu1::Float32, init_valu2::Float32)::Vector{Float32}
+        
+        N=size(grid)[1];
+        y0=zeros(Float64, N);#solution to differential equation
+        y1=zeros(Float64, N);#first derivative of solution to differential equation
+        y0[1]= init_valu1;
+        y1[1]= (init_valu2 - init_valu1)/(grid[2]-grid[1]);
+        
+        for i in 1:4
+        #for i in 1:(N-1)
+            h= grid[i+1] - grid[i];
+            y0[i+1], y1[i+1]= RK4(g,f[i:i+1],y0[i], y1[i],h);
+        end
+        #integration loop using prediction correction adams moulton degree 5
+        for i in 6:N
+            h= grid[i] - grid[i-1];
+            y0[i], y1[i]= PCABM5(g,f[i-5:i],y0[i-5:i-1], y1[i-5:i-1],h);
+        end
+        
+        return y0
+    end
+
 """
     RK4(g::Vector{Float32}, f::Vector{Float32},
          y0::Float32, y1::Float32, h::Float32)::Vector{Float32}
