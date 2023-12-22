@@ -25,11 +25,11 @@ module Atomic_Schrodinger_Equation
         
         N=size(grid)[1]
 
-        y0=zeros(Float64, N)
-        y1=zeros(Float64, N)
-        g0=zeros(Float64, 6)
-        g1=zeros(Float64, 6)
-        f0=ones(Float64, 6)
+        y0=zeros(Float32, N)
+        y1=zeros(Float32, N)
+        g0=zeros(Float32, 6)
+        g1=zeros(Float32, 6)
+        f0=ones(Float32, 6)
 
         if forward
             #set initial conditions
@@ -129,7 +129,7 @@ module Atomic_Schrodinger_Equation
         merge_value= deri_b - deri_f
         #merge forward and backward integration
         N=size(grid)[1]
-        u=zeros(Float64, N)
+        u=zeros(Float32, N)
         for i in 1:node-3
             u[i]=u_fwrd[i]
         end

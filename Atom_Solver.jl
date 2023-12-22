@@ -43,25 +43,25 @@ grid_bwrd= reverse(grid)
 occupation_by_shell, n_by_shell, l_by_shell= Process_Quantum_Numbers.get_shells_occupations_and_quantum_numbers(config["Z"], quan_numb_df);
 
 Z=config["Z"]
-eigen_guesses= [-0.5*(Float64(config["Z"])^2.0)/((n)^2.0) for n in n_by_shell];
+eigen_guesses= [-0.5*(Float32(config["Z"])^2.0)/((n)^2.0) for n in n_by_shell];
 
 N=size(grid)[1]
 N_search=50
 step=0
-density_in= zeros(Float64, N)
-v_h= zeros(Float64, N)
-v_x= zeros(Float64, N)
-v_c= zeros(Float64, N)
+density_in= zeros(Float32, N)
+v_h= zeros(Float32, N)
+v_x= zeros(Float32, N)
+v_c= zeros(Float32, N)
 E_total=1.0
 E_total_before=2.0;
 
 while abs(E_total - E_total_before) > 10.0e-8
 
     #if step == 0
-    #    density_in= zeros(Float64, N)
-    #    v_h= zeros(Float64, N)
-    #    v_x= zeros(Float64, N)
-    #    v_c= zeros(Float64, N)
+    #    density_in= zeros(Float32, N)
+    #    v_h= zeros(Float32, N)
+    #    v_x= zeros(Float32, N)
+    #    v_c= zeros(Float32, N)
     #end
     eigen_interval_by_shell=[]
     Ea=0.0

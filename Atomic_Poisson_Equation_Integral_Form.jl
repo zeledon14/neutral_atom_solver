@@ -11,11 +11,11 @@ module Atomic_Poisson_Equation_Integral_Form
         #V_hartree= U_hartree/r
         N=size(grid)[1]
 
-        y0=zeros(Float64, N)
-        y1=zeros(Float64, N)
-        g0=zeros(Float64, 6)
-        f1=zeros(Float64, 6)
-        f0=ones(Float64, 6)
+        y0=zeros(Float32, N)
+        y1=zeros(Float32, N)
+        g0=zeros(Float32, 6)
+        f1=zeros(Float32, 6)
+        f0=ones(Float32, 6)
 
         y0[1]= y0_0
         y1[1]= y0_0/grid[1]#0.0

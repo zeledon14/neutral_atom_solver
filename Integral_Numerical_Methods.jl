@@ -24,13 +24,13 @@ module Integral_Numerical_Methods
             **Output:**
                 -Vector{Float32} the function that solves the differential equation over the grid
 """
-function integrate_second_order_DE(grid::Vector{Float32}, 
+    function integrate_second_order_DE(grid::Vector{Float32}, 
         g::Vector{Float32}, f::Vector{Float32}, 
         init_valu1::Float32, init_valu2::Float32)::Vector{Float32}
         
         N=size(grid)[1];
-        y0=zeros(Float64, N);#solution to differential equation
-        y1=zeros(Float64, N);#first derivative of solution to differential equation
+        y0=zeros(Float32, N);#solution to differential equation
+        y1=zeros(Float32, N);#first derivative of solution to differential equation
         y0[1]= init_valu1;
         y1[1]= (init_valu2 - init_valu1)/(grid[2]-grid[1]);
         
@@ -70,7 +70,7 @@ function integrate_second_order_DE(grid::Vector{Float32},
         -Vector{Float32} [y^0(x_i+1) y^1(x_i+1)] the values evaluated at x_{i+1}
 """
     function RK4(g::Vector{Float32}, f::Vector{Float32},
-         y0::Float32, y1::Float32, h::Float32)::Vector{Float32}
+         y0::Float32, y1::Float32, h::Float32)::Tuple{Float32, Float32}
         #1 stands for the element i in the arrays
         #2 stands for the element i+1 in the arrays
         k01=h*(y1)
@@ -112,7 +112,7 @@ function integrate_second_order_DE(grid::Vector{Float32},
                 -Vector{Float32} [y^0(x_i) y^1(x_i)] the values evaluated at x_{i}
 """
     function PCAM4(g::Vector{Float32}, f::Vector{Float32},
-        y0::Vector{Float32}, y1::Vector{Float32}, h::Float32)::Vector{Float32}
+        y0::Vector{Float32}, y1::Vector{Float32}, h::Float32)::Tuple{Float32, Float32}
 
         yp0= y0[4] + (h/24.0)*(55.0*(y1[4]) -59.0*(y1[3]) 
                                 +37.0*(y1[2]) -9.0*(y1[1]))
@@ -148,7 +148,7 @@ function integrate_second_order_DE(grid::Vector{Float32},
                     -Vector{Float32} [y^0(x_i) y^1(x_i)] the values evaluated at x_{i}
 """
 function PCABM5(g::Vector{Float32}, f::Vector{Float32},
-        y0::Vector{Float32}, y1::Vector{Float32}, h::Float32)::Vector{Float32}
+        y0::Vector{Float32}, y1::Vector{Float32}, h::Float32)::Tuple{Float32, Float32}
         yp0= y0[5] + (h/720.0)*(1901.0*(y1[5]) 
                                 -2774.0*(y1[4]) +2616.0*(y1[3]) 
                                 -1274.0*(y1[2]) +251.0*(y1[1]))
