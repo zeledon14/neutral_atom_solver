@@ -1,5 +1,8 @@
+
 module Utils
-    function find_index_function_nodes(func)
+using AutomaticDocstrings    
+@autodoc
+    function find_index_function_nodes(func::Vector{Float32})::Vector{Int32}
         #func: vector containing the values of the function
         temp= Int[]
         sign_befo= Integer(sign(func[1]))

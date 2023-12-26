@@ -11,7 +11,7 @@ module Hydrogen
 
     **Output:**
         - u_s1: The vector with the values of u_s1 over the grid.
-"""
+    """
     function u_s1_hydrogen(grid::Vector{Float32})::Vector{Float32}
         u=[xi*exp(-1.0*xi) for xi in grid]
         return u 
